@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 11:01:40 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/25 14:19:54 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/02/25 16:39:15 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 # include <string.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <time.h>
 # include <mlx.h>
 # include "../libft/libft.h"
 
-# define ITERATION_MANDELBROT_X 800
-# define ITERATION_MANDELBROT_Y 700
-# define ITERATION_MANDELBROT_Z 15
+# define WIDTH 800
+# define HEIGHT 700
+# define DEPTH_MANDELBROT 15
+# define DEPTH_JULIA 300
 
 typedef struct		s_mandelbrot
 {
@@ -35,8 +38,23 @@ typedef struct		s_mandelbrot
 	float			minY;
 	float			maxX;
 	float			maxY;
-	int				color;
 }					t_mandelbrot;
+
+typedef struct		s_julia
+{
+	int				x;
+	int				y;
+	int				a;
+	float			rc;
+	float			ic;
+	float			newre;
+	float			newim;
+	float			oldre;
+	float			oldim;
+	float			zoom;
+	float			moveX;
+	float			moveY;
+}					t_julia;
 
 typedef struct		s_color
 {
@@ -58,6 +76,7 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
+	char			*fractol;
 	t_image			i;
 }					t_env;
 
@@ -75,9 +94,19 @@ void			ft_init(char *fractol);
 ** mandelbrot.c
 */
 
-void		ft_depth_loop(t_env *e, t_mandelbrot *m);
-void		ft_horizontal_loop(t_env *e, t_mandelbrot *m);
-void		ft_vertical_loop(t_env *e, t_mandelbrot *m);
-void		display_mandelbrot(t_env *e);
+void			mandelbrot_choose_color(t_mandelbrot *m, t_color *color);
+void			mandelbrot_depth_loop(t_env *e, t_mandelbrot *m);
+void			mandelbrot_horizontal_loop(t_env *e, t_mandelbrot *m);
+void			mandelbrot_vertical_loop(t_env *e, t_mandelbrot *m);
+void			display_mandelbrot(t_env *e);
+
+/*
+** julia.c
+*/
+
+void			julia_depth_loop(t_env *e, t_julia *j);
+void			julia_horizontal_loop(t_env *e, t_julia *j);
+void			julia_vertical_loop(t_env *e, t_julia *j);
+void			display_julia(t_env *e);
 
 #endif

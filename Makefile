@@ -6,7 +6,7 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/25 11:20:37 by nschilli          #+#    #+#              #
-#    Updated: 2015/02/25 14:16:10 by nschilli         ###   ########.fr        #
+#    Updated: 2015/02/25 15:36:30 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCDIR = srcs/
 CFILES =	main.c \
 			display.c \
 			mandelbrot.c \
+			julia.c \
 
 
 MLX = -L/usr/X11/lib -lmlx -lXext -lX11
