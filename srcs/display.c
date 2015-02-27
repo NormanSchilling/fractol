@@ -5,60 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/25 11:01:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/25 15:38:24 by nschilli         ###   ########.fr       */
+/*   Created: 2015/02/27 10:39:52 by nschilli          #+#    #+#             */
+/*   Updated: 2015/02/27 16:18:45 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void		ft_put_pixel_to_image(t_image *i, int x, int y, t_color color)
+void		ft_zoom(t_env *e)
 {
-	int		index;
+	if (ft_strcmp(e->fractol, "mandelbrot") == 0)
+	{
+		e->m.minX += e->mouse.x/5/e->zoom;
+		e->m.maxX += e->mouse.x/5/e->zoom;
+		e->m.minY += e->mouse.y/5/e->zoom;
+		e->m.maxY += e->mouse.y/5/e->zoom;
 
-	index = (y * i->size_line) + ((x * i->bits_per_pixel) / 8);
-	i->data[index] = color.r;
-	i->data[index + 1] = color.g;
-	i->data[index + 2] = color.b;
+		e->zoom *= 1.005;
+	}
+	else if (ft_strcmp(e->fractol, "julia") == 0)
+	{
+		e->j.minX += e->mouse.x/5/e->zoom;
+		e->j.maxX += e->mouse.x/5/e->zoom;
+		e->j.minY += e->mouse.y/5/e->zoom;
+		e->j.maxY += e->mouse.y/5/e->zoom;
+		e->zoom *= 1.005;
+	}
+}
+
+void		ft_dezoom(t_env *e)
+{
+	if (ft_strcmp(e->fractol, "mandelbrot") == 0)
+	{
+		e->m.minX -= e->mouse.x/5/e->zoom;
+		e->m.maxX -= e->mouse.x/5/e->zoom;
+		e->m.minY -= e->mouse.y/5/e->zoom;
+		e->m.maxY -= e->mouse.y/5/e->zoom;
+		e->zoom *= 0.995;
+	}
+	else if (ft_strcmp(e->fractol, "julia") == 0)
+	{
+		e->j.minX += e->mouse.x/5/e->zoom;
+		e->j.maxX += e->mouse.x/5/e->zoom;
+		e->j.minY += e->mouse.y/5/e->zoom;
+		e->j.maxY += e->mouse.y/5/e->zoom;
+		e->zoom *= 0.995;
+	}
 }
 
 void		ft_display(t_env *e)
 {
 	if (ft_strcmp(e->fractol, "mandelbrot") == 0)
 	{
-		display_mandelbrot(e);
+		mandelbrot_vertical_loop(e, &(e->m));
 		mlx_put_image_to_window (e->mlx, e->win, e->i.image, 0, 0);
 	}
 	else if (ft_strcmp(e->fractol, "julia") == 0)
 	{
-		display_julia(e);
+		julia_vertical_loop(e, &(e->j));
 		mlx_put_image_to_window (e->mlx, e->win, e->i.image, 0, 0);
 	}
-}
-
-int			key_hook(int keycode)
-{
-	if (keycode == 65307)
-		exit(0);
-	return (0);
-}
-
-int			expose_hook(t_env *e)
-{
-	ft_display(e);
-	return (0);
-}
-
-void		ft_init(char *fractol)
-{
-	t_env	e;
-
-	e.fractol = ft_strdup(fractol);
-	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, WIDTH, HEIGHT, "Fractol");
-	e.i.image = mlx_new_image ( e.mlx, WIDTH, HEIGHT );
-	e.i.data = mlx_get_data_addr ( e.i.image, &(e.i.bits_per_pixel), &(e.i.size_line), &(e.i.endian) );
-	mlx_key_hook(e.win, key_hook, &e);
-	mlx_expose_hook(e.win, expose_hook, &e);
-	mlx_loop(e.mlx);
 }

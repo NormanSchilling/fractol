@@ -6,13 +6,13 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 10:55:39 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/25 16:42:32 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/02/27 15:52:36 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void		mandelbrot_choose_color(t_mandelbrot *m, t_color *color)
+void			mandelbrot_choose_color(t_fractal *m, t_color *color)
 {
 	if (m->a >= DEPTH_MANDELBROT)
 	{
@@ -22,43 +22,38 @@ void		mandelbrot_choose_color(t_mandelbrot *m, t_color *color)
 	}
 	else
 	{
-		color->r = rand() % 255;
-		color->g = rand() % 255;
-		color->b = rand() % 255;
+		color->r = sin(m->a/5)*255;
+		color->g = sin(m->a/15)*255;
+		color->b = sin(m->a/12)*255;
 	}
 }
 
-void		mandelbrot_depth_loop(t_env *e, t_mandelbrot *m)
+void			mandelbrot_depth_loop(t_env *e, t_fractal *m)
 {
-	float	rz;
-	float	iz;
-	float	r;
-	float	i;
-
-	rz = 0;
-	iz = 0;
+	m->rz = 0;
+	m->iz = 0;
 	m->a = 0;
 	while (m->a < DEPTH_MANDELBROT)
 	{
-		r = rz;
-		i = iz;
-		rz = r * r - i * i + m->rc;
-		iz = 2 * r * i + m->ic;
-		if ((rz * rz + iz * iz) >= 4)
+		m->r = m->rz;
+		m->i = m->iz;
+		m->rz = m->r * m->r - m->i * m->i + m->rc;
+		m->iz = 2 * m->r * m->i + m->ic;
+		if ((m->rz * m->rz + m->iz * m->iz) >= 4)
 			break ;
 		m->a++;
 	}
 }
 
-void		mandelbrot_horizontal_loop(t_env *e, t_mandelbrot *m)
+void			mandelbrot_horizontal_loop(t_env *e, t_fractal *m)
 {
 	t_color		color;
 
 	m->y = 0;
 	while (m->y < HEIGHT)
 	{
-		m->rc = m->minX + (m->maxX - m->minX) / WIDTH * m->x;
-		m->ic = m->minY + (m->maxY - m->minY) / HEIGHT * m->y;
+		m->rc = m->minX + (m->maxX - m->minX) / WIDTH * (m->x / e->zoom);
+		m->ic = m->minY + (m->maxY - m->minY) / HEIGHT * (m->y / e->zoom);
 		mandelbrot_depth_loop(e, m);
 		mandelbrot_choose_color(m, &color);
 		ft_put_pixel_to_image(&(e->i), m->x, m->y, color);
@@ -66,7 +61,7 @@ void		mandelbrot_horizontal_loop(t_env *e, t_mandelbrot *m)
 	}
 }
 
-void		mandelbrot_vertical_loop(t_env *e, t_mandelbrot *m)
+void			mandelbrot_vertical_loop(t_env *e, t_fractal *m)
 {
 	m->x = 0;
 	while (m->x < WIDTH)
@@ -76,14 +71,12 @@ void		mandelbrot_vertical_loop(t_env *e, t_mandelbrot *m)
 	}
 }
 
-void		display_mandelbrot(t_env *e)
+t_fractal	init_mandelbrot(t_env *e)
 {
-	t_mandelbrot	m;
+	e->m.minX = -2.4;
+	e->m.maxX = 2.4;
+	e->m.minY = -1.5;
+	e->m.maxY = 1.5;
 
-	m.minX = -2.4;
-	m.maxX = 2.4;
-	m.minY = -1.5;
-	m.maxY = 1.5;
-
-	mandelbrot_vertical_loop(e, &m);
+	return (e->m);
 }
