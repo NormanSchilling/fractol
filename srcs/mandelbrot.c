@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 10:55:39 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:19:35 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 15:46:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void			mandelbrot_horizontal_loop(t_env *e, t_fractal *m)
 	m->y = 0;
 	while (m->y < HEIGHT)
 	{
-		m->rc = m->minX + (m->maxX - m->minX) / WIDTH * (m->x / e->zoom);
-		m->ic = m->minY + (m->maxY - m->minY) / HEIGHT * (m->y / e->zoom);
+		m->rc = m->min_x + (m->max_x - m->min_x) / WIDTH * (m->x / e->zoom);
+		m->ic = m->min_y + (m->max_y - m->min_y) / HEIGHT * (m->y / e->zoom);
 		mandelbrot_depth_loop(e, m);
 		mandelbrot_choose_color(m, &(e->color));
 		ft_put_pixel_to_image(&(e->i), m->x, m->y, e->color);
@@ -71,12 +71,11 @@ void			mandelbrot_vertical_loop(t_env *e, t_fractal *m)
 	}
 }
 
-t_fractal	init_mandelbrot(t_env *e)
+t_fractal		init_mandelbrot(t_env *e)
 {
-	e->m.minX = -2.4;
-	e->m.maxX = 2.4;
-	e->m.minY = -1.5;
-	e->m.maxY = 1.5;
-
+	e->m.min_x = -2.4;
+	e->m.max_x = 2.4;
+	e->m.min_y = -1.5;
+	e->m.max_y = 1.5;
 	return (e->m);
 }

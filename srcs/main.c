@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 10:56:07 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 13:54:45 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 15:47:59 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ static int		check_params(char *params)
 	return (1);
 }
 
-int				main(int argc, char** argv)
+int				main(int argc, char **argv)
 {
 	srand(time(NULL));
-
 	if (argc == 2)
 	{
 		if (check_params(argv[1]) == 0)

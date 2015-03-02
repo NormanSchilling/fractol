@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/02 13:11:51 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:20:00 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 15:41:21 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void			burningship_horizontal_loop(t_env *e, t_fractal *b)
 	b->y = 0;
 	while (b->y < HEIGHT)
 	{
-		b->rc = b->minX + (b->maxX - b->minX) / WIDTH * (b->x / e->zoom);
-		b->ic = b->minY + (b->maxY - b->minY) / HEIGHT * (b->y / e->zoom);
+		b->rc = b->min_x + (b->max_x - b->min_x) / WIDTH * (b->x / e->zoom);
+		b->ic = b->min_y + (b->max_y - b->min_y) / HEIGHT * (b->y / e->zoom);
 		burningship_depth_loop(e, b);
 		burningship_choose_color(b, &(e->color));
 		ft_put_pixel_to_image(&(e->i), b->x, b->y, e->color);
@@ -69,12 +69,11 @@ void			burningship_vertical_loop(t_env *e, t_fractal *b)
 	}
 }
 
-t_fractal	init_burningship(t_env *e)
+t_fractal		init_burningship(t_env *e)
 {
-	e->b.minX = -2.4;
-	e->b.maxX = 2.4;
-	e->b.minY = -1.5;
-	e->b.maxY = 1.5;
-
+	e->b.min_x = -2.4;
+	e->b.max_x = 2.4;
+	e->b.min_y = -1.5;
+	e->b.max_y = 1.5;
 	return (e->b);
 }
