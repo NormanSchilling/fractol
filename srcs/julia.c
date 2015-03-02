@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 14:51:13 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/27 16:29:26 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 15:16:58 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,18 @@ void			julia_choose_color(t_fractal *j, t_color *color)
 	}
 	else
 	{
-		color->r = sin(j->a/1)*255;
-		color->g = sin(j->a/12)*255;
-		color->b = sin(j->a/6)*255;
+		if (j->a == 0)
+		{
+			color->r = sinf((float)j->a / DEPTH_BURNINGSHIP) * 214;
+			color->g = sinf((float)j->a / DEPTH_BURNINGSHIP) * 230;
+			color->b = sinf((float)j->a / DEPTH_BURNINGSHIP) * 255;
+		}
+		else if (j->a == 1)
+		{
+			color->r = sinf((float)j->a / DEPTH_BURNINGSHIP) * 67;
+			color->g = sinf((float)j->a / DEPTH_BURNINGSHIP) * 255;
+			color->b = sinf((float)j->a / DEPTH_BURNINGSHIP) * 239;
+		}
 	}
 }
 
@@ -53,8 +62,8 @@ void			julia_horizontal_loop(t_env *e, t_fractal *j)
 		j->rz = j->minX + (j->maxX - j->minX) / WIDTH * (j->x / e->zoom);
 		j->iz = j->minY + (j->maxY - j->minY) / HEIGHT * (j->y / e->zoom);
 		julia_depth_loop(e, j);
-		julia_choose_color(j, &color);
-		ft_put_pixel_to_image(&(e->i), j->x, j->y, color);
+		julia_choose_color(j, &(e->color));
+		ft_put_pixel_to_image(&(e->i), j->x, j->y, e->color);
 		j->y++;
 	}
 }

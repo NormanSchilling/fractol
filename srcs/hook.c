@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/27 14:40:57 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/27 16:29:46 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 14:29:38 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int			key_hook(int keycode, t_env *e)
 {
+	// printf("%d\n", keycode);
 	if (keycode == 65307)
 		exit(0);
 	if (keycode == 65451)
@@ -40,8 +41,6 @@ int			mouse_hook_position(int x, int y, t_env *e)
 	{
 		e->j.rc += e->mouse.x / WIDTH;
 		e->j.ic += e->mouse.y / HEIGHT;
-		printf("rc = %f\n", e->j.rc);
-		printf("ic = %f\n", e->j.ic);
 	}
 }
 

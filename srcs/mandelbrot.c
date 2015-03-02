@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 10:55:39 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/27 15:52:36 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 15:19:35 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void			mandelbrot_choose_color(t_fractal *m, t_color *color)
 	}
 	else
 	{
-		color->r = sin(m->a/5)*255;
-		color->g = sin(m->a/15)*255;
-		color->b = sin(m->a/12)*255;
+		color->r = sinf((float)m->a / DEPTH_BURNINGSHIP) * 214;
+		color->g = sinf((float)m->a / DEPTH_BURNINGSHIP) * 230;
+		color->b = sinf((float)m->a / DEPTH_BURNINGSHIP) * 255;
 	}
 }
 
@@ -55,8 +55,8 @@ void			mandelbrot_horizontal_loop(t_env *e, t_fractal *m)
 		m->rc = m->minX + (m->maxX - m->minX) / WIDTH * (m->x / e->zoom);
 		m->ic = m->minY + (m->maxY - m->minY) / HEIGHT * (m->y / e->zoom);
 		mandelbrot_depth_loop(e, m);
-		mandelbrot_choose_color(m, &color);
-		ft_put_pixel_to_image(&(e->i), m->x, m->y, color);
+		mandelbrot_choose_color(m, &(e->color));
+		ft_put_pixel_to_image(&(e->i), m->x, m->y, e->color);
 		m->y++;
 	}
 }

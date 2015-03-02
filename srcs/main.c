@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 10:56:07 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/25 16:39:42 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 13:54:45 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void		menu(void)
 	ft_putendl("  --- PARAMS ---");
 	ft_putendl("  1. mandelbrot");
 	ft_putendl("  2. julia");
+	ft_putendl("  3. burningship");
 }
 
 static int		check_params(char *params)
@@ -25,6 +26,8 @@ static int		check_params(char *params)
 	if (ft_strcmp(params, "mandelbrot") == 0)
 		return (0);
 	else if (ft_strcmp(params, "julia") == 0)
+		return (0);
+	else if (ft_strcmp(params, "burningship") == 0)
 		return (0);
 	return (1);
 }

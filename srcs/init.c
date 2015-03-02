@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 11:01:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/02/27 15:56:34 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/02 14:44:23 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void		ft_put_pixel_to_image(t_image *i, int x, int y, t_color color)
 	int		index;
 
 	index = (y * i->size_line) + ((x * i->bits_per_pixel) / 8);
-	i->data[index] = color.r;
+	i->data[index] = color.b;;
 	i->data[index + 1] = color.g;
-	i->data[index + 2] = color.b;
+	i->data[index + 2] = color.r;
 }
 
 double		get_time(void)
@@ -47,7 +47,6 @@ void		ft_init(char *fractol)
 {
 	t_env	e;
 
-
 	e.zoom = 1.0;
 	e.fractol = ft_strdup(fractol);
 	e.mlx = mlx_init();
@@ -55,7 +54,7 @@ void		ft_init(char *fractol)
 
 	e.m = init_mandelbrot(&e);
 	e.j = init_julia(&e);
-
+	e.b = init_burningship(&e);
 	e.i.image = mlx_new_image ( e.mlx, WIDTH, HEIGHT );
 	e.i.data = mlx_get_data_addr ( e.i.image, &(e.i.bits_per_pixel), &(e.i.size_line), &(e.i.endian) );
 	mlx_hook(e.win, KeyPress, KeyPressMask, &key_hook, &e);

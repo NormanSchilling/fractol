@@ -6,7 +6,7 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/25 11:20:37 by nschilli          #+#    #+#              #
-#    Updated: 2015/02/27 14:42:12 by nschilli         ###   ########.fr        #
+#    Updated: 2015/03/02 13:54:38 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CFILES =	main.c \
 			display.c \
 			mandelbrot.c \
 			julia.c \
+			burningship.c \
 
 
 MLX = -L/usr/X11/lib -lmlx -lXext -lX11
