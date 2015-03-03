@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 11:01:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:45:18 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/03 10:17:55 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ void		ft_init(char *fractol)
 	e.fractol = ft_strdup(fractol);
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, WIDTH, HEIGHT, "Fractol");
-	e.m = init_mandelbrot(&e);
-	e.j = init_julia(&e);
-	e.b = init_burningship(&e);
+	if (ft_strcmp(e.fractol, "mandelbrot") == 0)
+		e.f = init_mandelbrot(&e);
+	if (ft_strcmp(e.fractol, "julia") == 0)
+		e.f = init_julia(&e);
+	if (ft_strcmp(e.fractol, "burningship") == 0)
+		e.f = init_burningship(&e);
+	if (ft_strcmp(e.fractol, "brain") == 0)
+		e.f = init_brain(&e);
 	e.i.image = mlx_new_image (e.mlx, WIDTH, HEIGHT);
 	e.i.data = mlx_get_data_addr (e.i.image, &(e.i.bits_per_pixel),
 	&(e.i.size_line), &(e.i.endian));

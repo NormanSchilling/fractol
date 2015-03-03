@@ -6,15 +6,15 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 14:51:13 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:44:45 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/03 10:11:46 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void			julia_choose_color(t_fractal *j, t_color *color)
+void			julia_choose_color(t_fractal *f, t_color *color)
 {
-	if (j->a >= DEPTH_JULIA)
+	if (f->a >= DEPTH_JULIA)
 	{
 		color->r = 0;
 		color->g = 0;
@@ -22,60 +22,60 @@ void			julia_choose_color(t_fractal *j, t_color *color)
 	}
 	else
 	{
-		color->r = sinf((float)j->a / DEPTH_BURNINGSHIP) * 214;
-		color->g = sinf((float)j->a / DEPTH_BURNINGSHIP) * 230;
-		color->b = sinf((float)j->a / DEPTH_BURNINGSHIP) * 255;
+		color->r = sinf((float)f->a / DEPTH_JULIA) * 214;
+		color->g = sinf((float)f->a / DEPTH_JULIA) * 230;
+		color->b = sinf((float)f->a / DEPTH_JULIA) * 255;
 	}
 }
 
-void			julia_depth_loop(t_env *e, t_fractal *j)
+void			julia_depth_loop(t_env *e, t_fractal *f)
 {
-	j->a = 0;
-	while (j->a < DEPTH_JULIA)
+	f->a = 0;
+	while (f->a < DEPTH_JULIA)
 	{
-		j->r = j->rz;
-		j->i = j->iz;
-		j->rz = j->r * j->r - j->i * j->i + j->rc;
-		j->iz = 2 * j->r * j->i + j->ic;
-		if ((j->rz * j->rz + j->iz * j->iz) >= 4)
+		f->r = f->rz;
+		f->i = f->iz;
+		f->rz = f->r * f->r - f->i * f->i + f->rc;
+		f->iz = 2 * f->r * f->i + f->ic;
+		if ((f->rz * f->rz + f->iz * f->iz) >= 4)
 			break ;
-		j->a++;
+		f->a++;
 	}
 }
 
-void			julia_horizontal_loop(t_env *e, t_fractal *j)
+void			julia_horizontal_loop(t_env *e, t_fractal *f)
 {
 	t_color		color;
 
-	j->y = 0;
-	while (j->y < HEIGHT)
+	f->y = 0;
+	while (f->y < HEIGHT)
 	{
-		j->rz = j->min_x + (j->max_x - j->min_x) / WIDTH * (j->x / e->zoom);
-		j->iz = j->min_y + (j->max_y - j->min_y) / HEIGHT * (j->y / e->zoom);
-		julia_depth_loop(e, j);
-		julia_choose_color(j, &(e->color));
-		ft_put_pixel_to_image(&(e->i), j->x, j->y, e->color);
-		j->y++;
+		f->rz = f->min_x + (f->max_x - f->min_x) / WIDTH * (f->x / e->zoom);
+		f->iz = f->min_y + (f->max_y - f->min_y) / HEIGHT * (f->y / e->zoom);
+		julia_depth_loop(e, f);
+		julia_choose_color(f, &(e->color));
+		ft_put_pixel_to_image(&(e->i), f->x, f->y, e->color);
+		f->y++;
 	}
 }
 
-void			julia_vertical_loop(t_env *e, t_fractal *j)
+void			julia_vertical_loop(t_env *e, t_fractal *f)
 {
-	j->x = 0;
-	while (j->x < WIDTH)
+	f->x = 0;
+	while (f->x < WIDTH)
 	{
-		julia_horizontal_loop(e, j);
-		j->x++;
+		julia_horizontal_loop(e, f);
+		f->x++;
 	}
 }
 
 t_fractal		init_julia(t_env *e)
 {
-	e->j.min_x = -2.4;
-	e->j.max_x = 2.4;
-	e->j.min_y = -1.5;
-	e->j.max_y = 1.5;
-	e->j.rc = 0.5;
-	e->j.ic = 0.5;
-	return (e->j);
+	e->f.min_x = -2.4;
+	e->f.max_x = 2.4;
+	e->f.min_y = -1.5;
+	e->f.max_y = 1.5;
+	e->f.rc = 0.5;
+	e->f.ic = 0.5;
+	return (e->f);
 }

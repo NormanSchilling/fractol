@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/25 11:01:40 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:37:12 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/03 10:16:22 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define DEPTH_JULIA 30
 # define DEPTH_NEWTON 30
 # define DEPTH_BURNINGSHIP 30
+# define DEPTH_BRAIN 30
 
 typedef struct		s_fractal
 {
@@ -75,9 +76,7 @@ typedef struct		s_env
 	void			*win;
 	char			*fractol;
 	float			zoom;
-	t_fractal		m;
-	t_fractal		j;
-	t_fractal		b;
+	t_fractal		f;
 	t_image			i;
 	t_mouse			mouse;
 	t_color			color;
@@ -110,26 +109,34 @@ void				ft_display(t_env *e);
 /*
 ** mandelbrot.c
 */
-void				mandelbrot_choose_color(t_fractal *m, t_color *color);
-void				mandelbrot_depth_loop(t_env *e, t_fractal *m);
-void				mandelbrot_horizontal_loop(t_env *e, t_fractal *m);
-void				mandelbrot_vertical_loop(t_env *e, t_fractal *m);
+void				mandelbrot_choose_color(t_fractal *f, t_color *color);
+void				mandelbrot_depth_loop(t_env *e, t_fractal *f);
+void				mandelbrot_horizontal_loop(t_env *e, t_fractal *f);
+void				mandelbrot_vertical_loop(t_env *e, t_fractal *f);
 t_fractal			init_mandelbrot(t_env *e);
 
 /*
 ** julia.c
 */
-void				julia_depth_loop(t_env *e, t_fractal *j);
-void				julia_horizontal_loop(t_env *e, t_fractal *j);
-void				julia_vertical_loop(t_env *e, t_fractal *j);
+void				julia_depth_loop(t_env *e, t_fractal *f);
+void				julia_horizontal_loop(t_env *e, t_fractal *f);
+void				julia_vertical_loop(t_env *e, t_fractal *f);
 t_fractal			init_julia(t_env *e);
+
+/*
+** brain.c
+*/
+void				brain_depth_loop(t_env *e, t_fractal *f);
+void				brain_horizontal_loop(t_env *e, t_fractal *f);
+void				brain_vertical_loop(t_env *e, t_fractal *f);
+t_fractal			init_brain(t_env *e);
 
 /*
 ** burningship.c
 */
-void				burningship_depth_loop(t_env *e, t_fractal *n);
-void				burningship_horizontal_loop(t_env *e, t_fractal *n);
-void				burningship_vertical_loop(t_env *e, t_fractal *n);
+void				burningship_depth_loop(t_env *e, t_fractal *f);
+void				burningship_horizontal_loop(t_env *e, t_fractal *f);
+void				burningship_vertical_loop(t_env *e, t_fractal *f);
 t_fractal			init_burningship(t_env *e);
 
 #endif

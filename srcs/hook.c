@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/27 14:40:57 by nschilli          #+#    #+#             */
-/*   Updated: 2015/03/02 15:42:25 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/03/03 10:16:46 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ int			mouse_hook_position(int x, int y, t_env *e)
 	e->mouse.y = ((float)y - (HEIGHT / 2)) / (HEIGHT / 2);
 	if (ft_strcmp(e->fractol, "julia") == 0)
 	{
-		e->j.rc += e->mouse.x / WIDTH;
-		e->j.ic += e->mouse.y / HEIGHT;
+		e->f.rc += e->mouse.x / WIDTH;
+		e->f.ic += e->mouse.y / HEIGHT;
+	}
+	if (ft_strcmp(e->fractol, "brain") == 0)
+	{
+		e->f.rc += e->mouse.x / WIDTH;
+		e->f.ic += e->mouse.y / HEIGHT;
 	}
 }
 
